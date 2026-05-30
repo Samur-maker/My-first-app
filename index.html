@@ -1,116 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Notes App</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Notes Assistant</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, Arial;
-      background: #f2f4f8;
-      display: flex;
-      justify-content: center;
-      padding: 20px;
-    }
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f2f4f8;
+padding:20px;
+max-width:700px;
+margin:auto;
+}
 
-    .app {
-      width: 100%;
-      max-width: 500px;
-    }
+.card{
+background:white;
+padding:20px;
+border-radius:16px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
 
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    }
+textarea{
+width:100%;
+height:250px;
+padding:10px;
+font-size:16px;
+border-radius:10px;
+}
 
-    h1 {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
+button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
 
-    textarea {
-      width: 100%;
-      height: 300px;
-      border: none;
-      outline: none;
-      font-size: 16px;
-      resize: none;
-      padding: 10px;
-      border-radius: 12px;
-      background: #f7f8fa;
-    }
+.primary{
+background:#2563eb;
+color:white;
+}
 
-    .buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    button {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 12px;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    .save {
-      background: #2563eb;
-      color: white;
-    }
-
-    .load {
-      background: #e5e7eb;
-    }
-
-    button:active {
-      transform: scale(0.98);
-    }
-
-    .hint {
-      font-size: 12px;
-      color: #888;
-      margin-top: 10px;
-      text-align: center;
-    }
-  </style>
+.result{
+margin-top:15px;
+padding:10px;
+background:#eef2ff;
+border-radius:10px;
+}
+</style>
 </head>
 
 <body>
 
-<div class="app">
-  <div class="card">
-    <h1>📝 My Notes</h1>
+<div class="card">
 
-    <textarea id="note" placeholder="Start writing..."></textarea>
+<h2>🤖 AI Notes Assistant</h2>
 
-    <div class="buttons">
-      <button class="save" onclick="saveNote()">Save</button>
-      <button class="load" onclick="loadNote()">Load</button>
-    </div>
+<textarea id="note"></textarea>
 
-    <div class="hint">Saved locally in your browser</div>
-  </div>
+<br>
+
+<button class="primary" onclick="saveNote()">Save</button>
+<button onclick="loadNote()">Load</button>
+<button onclick="summarize()">Summarize</button>
+<button onclick="wordCount()">Word Count</button>
+
+<div id="result" class="result">
+Results appear here...
+</div>
+
 </div>
 
 <script>
-  function saveNote() {
-    let text = document.getElementById("note").value;
-    localStorage.setItem("myNote", text);
-  }
 
-  function loadNote() {
-    let text = localStorage.getItem("myNote");
-    document.getElementById("note").value = text || "";
-  }
+function saveNote(){
+let text=document.getElementById("note").value;
+localStorage.setItem("myNote",text);
+}
 
-  loadNote();
+function loadNote(){
+document.getElementById("note").value=
+localStorage.getItem("myNote")||"";
+}
+
+function summarize(){
+let text=document.getElementById("note").value;
+
+let summary=text.split(/[.!?。！？]/)
+.slice(0,2)
+.join(" ");
+
+document.getElementById("result").innerHTML=
+"<b>Summary:</b><br>"+summary;
+}
+
+function wordCount(){
+let text=document.getElementById("note").value;
+
+let count=text.trim().length;
+
+document.getElementById("result").innerHTML=
+"<b>Characters:</b> "+count;
+}
+
+loadNote();
+
 </script>
 
 </body>
+
 </html>
